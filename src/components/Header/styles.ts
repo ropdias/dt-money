@@ -29,3 +29,16 @@ export const NewTransactionButton = styled.button`
     transition: background-color 0.2s;
   }
 `
+
+export const OfflineBadge = styled.span`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: ${(props) => props.theme['yellow-500']};
+  color: ${(props) => props.theme['gray-900']};
+  font-size: 0.875rem;
+  font-weight: bold;
+  border-radius: 6px;
+  white-space: nowrap;
+`
