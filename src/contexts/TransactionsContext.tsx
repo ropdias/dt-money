@@ -92,8 +92,11 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
 
       // Se está em modo offline, cria direto no localStorage
       if (isOfflineMode) {
+        // Busca TODAS as transações do localStorage (não as filtradas)
+        const allTransactions = getStoredTransactions()
+
         const newTransaction: Transaction = {
-          id: getNextId(transactions),
+          id: getNextId(allTransactions),
           description,
           price,
           category,
@@ -101,9 +104,12 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
           createdAt: new Date().toISOString(),
         }
 
-        const newTransactions = [newTransaction, ...transactions]
-        setTransactions(newTransactions)
+        // Adiciona nova transação a TODAS as transações
+        const newTransactions = [newTransaction, ...allTransactions]
         saveTransactions(newTransactions)
+
+        // Atualiza o estado (que pode estar filtrado) adicionando a nova
+        setTransactions((state) => [newTransaction, ...state])
         return
       }
 
